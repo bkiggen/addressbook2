@@ -14,7 +14,9 @@ function Address(street, city, state) {
   this.state = state;
 }
 
-
+Contact.prototype.fullName = function() {
+  return this.firstName + " " + this.lastName;
+}
 
 
 
@@ -23,20 +25,20 @@ function Address(street, city, state) {
 $(document).ready(function() {
 
   $("#add-address").click(function() {
-    $("new-addresses").append('<div class="new-address">' +
-    '<div class="form-group">' +
-    '<label for="new-street">Street</label>' +
-    '<input type="text" class="form-control new-street">' +
-    '</div>' +
-    '<div class="form-group">' +
-    '<label for="new-city">City</label>' +
-    '<input type="text" class="form-control new-city">' +
-    '</div>' +
-    '<div class="form-group">' +
-    '<label for="new-state">State</label>' +
-    '<input type="text" class="form-control new-state">' +
-    '</div>' +
-    '</div>');
+    $("#new-addresses").append('<div class="new-address">' +
+                                 '<div class="form-group">' +
+                                   '<label for="new-street">Street</label>' +
+                                   '<input type="text" class="form-control new-street">' +
+                                 '</div>' +
+                                 '<div class="form-group">' +
+                                   '<label for="new-city">City</label>' +
+                                   '<input type="text" class="form-control new-city">' +
+                                 '</div>' +
+                                 '<div class="form-group">' +
+                                   '<label for="new-state">State</label>' +
+                                   '<input type="text" class="form-control new-state">' +
+                                 '</div>' +
+                               '</div>');
   });
 
   $("form#new-contact").submit(function(event){
@@ -54,7 +56,9 @@ $(document).ready(function() {
       newContact.addresses.push(newAddress);
     });
 
-    $("ul#contacts").append("<li><span class='contact'>" + newContact.FullName() + "</span></li>");
+    console.log(newContact.addresses)
+
+    $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
 
     $(".contact").last().click(function(){
       $("#show-contact").show();
@@ -64,6 +68,9 @@ $(document).ready(function() {
       $("ul#addresses").text("");
       newContact.addresses.forEach(function(address){
         $("ul#addresses").append("<li>" + address.street + ", " + address.city + " " + address.state + "</li>");
+
+
+
       });
     });
 
@@ -73,5 +80,5 @@ $(document).ready(function() {
     $("input.new-city").val("");
     $("input.new-state").val("");
 
-  });  
+  });
 });
